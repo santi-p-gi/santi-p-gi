@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Stampa — Gráfica Textil</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --verde: #7ac21e;
+    --verde-oscuro: #3b6d11;
+    --verde-neon: #a8e63c;
+    --negro: #111111;
+    --blanco: #ffffff;
+    --gris: #f4f4f0;
+    --gris-texto: #555;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--negro);
+    color: var(--blanco);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(122,194,30,0.15);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    color: var(--verde-neon);
+  }
+  .nav-logo span { color: var(--blanco); }
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav ul a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color .2s;
+  }
+  nav ul a:hover { color: var(--verde-neon); }
+
+  /* ── HERO ── */
+  #inicio {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 8rem 2rem 4rem;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 60%, rgba(122,194,30,0.12) 0%, transparent 70%),
+      linear-gradient(180deg, #0a0a0a 0%, #0d1a05 100%);
+  }
+
+  /* SVG ink splatter deco */
+  .ink-deco {
+    position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+  }
+  .ink-deco svg { width: 100%; height: 100%; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(122,194,30,0.15);
+    border: 1px solid rgba(122,194,30,0.35);
+    border-radius: 100px;
+    padding: 6px 18px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--verde-neon);
+    margin-bottom: 1.5rem;
+    position: relative;
+    animation: fadeUp .6s ease both;
+  }
+  .badge-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--verde-neon);
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .5; transform: scale(1.4); }
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 12vw, 10rem);
+    line-height: .92;
+    letter-spacing: 2px;
+    position: relative;
+    animation: fadeUp .7s .1s ease both;
+  }
+  .hero-title .green { color: var(--verde-neon); }
+  .hero-title .outline {
+    -webkit-text-stroke: 2px var(--blanco);
+    color: transparent;
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.55);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-top: 1.5rem;
+    position: relative;
+    animation: fadeUp .8s .2s ease both;
+  }
+
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    margin-top: 2.5rem;
+    position: relative;
+    animation: fadeUp .9s .3s ease both;
+  }
+  .btn-primary {
+    background: var(--verde);
+    color: var(--negro);
+    font-weight: 900;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    border-radius: 4px;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    transition: background .2s, transform .15s;
+  }
+  .btn-primary:hover { background: var(--verde-neon); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--blanco);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    border-radius: 4px;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color .2s, transform .15s;
+  }
+  .btn-outline:hover { border-color: var(--verde-neon); transform: translateY(-2px); }
+
+  /* hero photo mosaic */
+  .hero-mosaic {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-top: 4rem;
+    max-width: 900px;
+    width: 100%;
+    position: relative;
+    animation: fadeUp 1s .4s ease both;
+  }
+  .mosaic-cell {
+    border-radius: 8px;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    border: 1px solid rgba(122,194,30,0.2);
+  }
+  .mosaic-cell img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+  .mosaic-cell:hover img { transform: scale(1.05); }
+  .mosaic-cell.tall { grid-row: span 2; aspect-ratio: unset; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION WRAPPER ── */
+  section { padding: 6rem 2rem; }
+
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--verde);
+    margin-bottom: .75rem;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── MATERIALES / PRODUCTOS ── */
+  #productos { background: var(--negro); }
+
+  .products-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    margin-bottom: 4rem;
+  }
+  .products-intro p {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.8;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .product-card {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    border: 1px solid rgba(122,194,30,0.15);
+    cursor: pointer;
+  }
+  .product-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+  .product-card:hover img { transform: scale(1.08); }
+  .product-card-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 2rem 1rem 1rem;
+    background: linear-gradient(transparent, rgba(0,0,0,0.82));
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: .5px;
+  }
+  .product-card-label .tag {
+    display: inline-block;
+    background: var(--verde);
+    color: var(--negro);
+    font-size: 0.65rem;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 3px;
+    margin-bottom: 6px;
+  }
+
+  /* ── TÉCNICAS ── */
+  #tecnicas { background: #0d0d0d; }
+
+  .tecnicas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .tecnica-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(122,194,30,0.12);
+    border-radius: 10px;
+    padding: 2rem 1.5rem;
+    transition: border-color .25s, transform .25s;
+  }
+  .tecnica-card:hover {
+    border-color: rgba(122,194,30,0.45);
+    transform: translateY(-4px);
+  }
+  .tecnica-icon {
+    width: 46px; height: 46px;
+    background: rgba(122,194,30,0.12);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.25rem;
+    font-size: 1.4rem;
+  }
+  .tecnica-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    margin-bottom: .5rem;
+    color: var(--verde-neon);
+  }
+  .tecnica-card p {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+  }
+
+  /* ── UBICACIÓN / HORARIOS ── */
+  #ubicacion { background: var(--negro); }
+
+  .ubicacion-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 3rem;
+    align-items: start;
+  }
+
+  .map-placeholder {
+    background: rgba(122,194,30,0.05);
+    border: 1px solid rgba(122,194,30,0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    height: 340px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 1rem;
+    color: rgba(255,255,255,0.4);
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 2rem;
+  }
+  .map-pin-icon {
+    font-size: 3rem; line-height: 1;
+  }
+  .map-address {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--verde-neon);
+    margin-top: .5rem;
+  }
+
+  .horarios-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(122,194,30,0.15);
+    border-radius: 12px;
+    padding: 2rem;
+  }
+  .horarios-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+    color: var(--verde-neon);
+    margin-bottom: 1.5rem;
+  }
+  .horario-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 0.9rem;
+  }
+  .horario-row:last-child { border-bottom: none; }
+  .dia { color: rgba(255,255,255,0.6); font-weight: 600; }
+  .hora {
+    font-weight: 700;
+    color: var(--blanco);
+  }
+  .hora.cerrado { color: rgba(255,255,255,0.25); }
+  .hora-badge {
+    display: inline-block;
+    background: rgba(122,194,30,0.15);
+    color: var(--verde-neon);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 10px;
+    border-radius: 100px;
+    margin-left: 8px;
+  }
+
+  /* ── CONTACTO ── */
+  #contacto {
+    background: linear-gradient(135deg, #0d1a05 0%, #111 60%);
+    border-top: 1px solid rgba(122,194,30,0.15);
+  }
+
+  .contacto-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .contacto-info h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .contacto-info p {
+    color: rgba(255,255,255,0.55);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .contacto-cards { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-card {
+    display: flex; align-items: center; gap: 1rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(122,194,30,0.12);
+    border-radius: 10px;
+    padding: 1.1rem 1.4rem;
+    text-decoration: none;
+    color: var(--blanco);
+    transition: border-color .2s, transform .2s;
+  }
+  .contact-card:hover {
+    border-color: rgba(122,194,30,0.45);
+    transform: translateX(4px);
+  }
+  .contact-card-icon {
+    width: 42px; height: 42px;
+    background: rgba(122,194,30,0.14);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .contact-card-text .label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--verde);
+    margin-bottom: 2px;
+  }
+  .contact-card-text .value {
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .owner-card {
+    background: rgba(122,194,30,0.07);
+    border: 1px solid rgba(122,194,30,0.25);
+    border-radius: 12px;
+    padding: 2.5rem;
+    text-align: center;
+  }
+  .owner-avatar {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: var(--verde);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--negro);
+    margin: 0 auto 1rem;
+  }
+  .owner-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+    color: var(--verde-neon);
+    margin-bottom: .25rem;
+  }
+  .owner-role {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 1.5rem;
+  }
+  .owner-quote {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #080808;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 2rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.3);
+  }
+  footer span { color: var(--verde); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav ul { display: none; }
+    .products-intro,
+    .ubicacion-grid,
+    .contacto-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-mosaic { grid-template-columns: 1fr 1fr; }
+    .mosaic-cell.tall { grid-row: auto; }
+  }
+
+  /* scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .65s ease, transform .65s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-logo">La<span>Stampa</span></div>
+  <ul>
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#productos">Productos</a></li>
+    <li><a href="#tecnicas">Técnicas</a></li>
+    <li><a href="#ubicacion">Ubicación</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="inicio">
+  <div class="hero-bg"></div>
+
+  <!-- ink splatter SVG deco -->
+  <div class="ink-deco">
+    <svg viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="150" cy="150" rx="180" ry="80" fill="rgba(122,194,30,0.06)" transform="rotate(-20 150 150)"/>
+      <ellipse cx="1050" cy="550" rx="220" ry="90" fill="rgba(122,194,30,0.05)" transform="rotate(15 1050 550)"/>
+      <circle cx="900" cy="120" r="60" fill="rgba(122,194,30,0.04)"/>
+      <circle cx="300" cy="600" r="90" fill="rgba(122,194,30,0.04)"/>
+      <!-- drip lines -->
+      <rect x="200" y="180" width="3" height="80" rx="2" fill="rgba(122,194,30,0.18)"/>
+      <rect x="203" y="260" width="3" height="30" rx="2" fill="rgba(122,194,30,0.1)"/>
+      <rect x="980" y="80" width="3" height="60" rx="2" fill="rgba(122,194,30,0.18)"/>
+    </svg>
+  </div>
+
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    Concordia, Entre Ríos
+  </div>
+
+  <h1 class="hero-title">
+    <span class="green">La</span><br>
+    <span class="outline">Stampa</span>
+  </h1>
+  <p class="hero-sub">
+    Gráfica textil con identidad. Estampamos tu idea en remeras, gorras, uniformes y más — con calidad, color y pasión por el diseño.
+  </p>
+  <div class="hero-cta">
+    <a href="#productos" class="btn-primary">Ver trabajos</a>
+    <a href="#contacto" class="btn-outline">Contactar</a>
+  </div>
+
+  <!-- mosaic of real photos -->
+  <div class="hero-mosaic">
+    <div class="mosaic-cell tall">
+      <img src="images/oktoberfest.jpg" alt="Remeras Oktoberfest Concordia">
+    </div>
+    <div class="mosaic-cell">
+      <img src="images/pride.jpg" alt="Remeras Pride">
+    </div>
+    <div class="mosaic-cell">
+      <img src="images/cool-kitchen.jpg" alt="Gorras Cool Kitchen">
+    </div>
+    <div class="mosaic-cell">
+      <img src="images/deportivo.jpg" alt="Camisetas deportivas">
+    </div>
+  </div>
+</section>
+
+<!-- ── PRODUCTOS ── -->
+<section id="productos">
+  <div class="section-inner">
+    <div class="products-intro reveal">
+      <div>
+        <p class="section-label">Nuestros productos</p>
+        <h2 class="section-title">Con qué trabajamos</h2>
+      </div>
+      <p>
+        En La Stampa trabajamos con una amplia variedad de prendas y accesorios textiles. Desde remeras de algodón y poliéster hasta gorras trucker, camisetas deportivas sublimadas y mucho más. Cada material es seleccionado para garantizar el mejor resultado de impresión y la mayor durabilidad.
+      </p>
+    </div>
+
+    <div class="products-grid reveal">
+      <div class="product-card">
+        <img src="images/oktoberfest.jpg" alt="Remeras de algodón estampadas">
+        <div class="product-card-label">
+          <div class="tag">Más vendido</div>
+          <div>Remeras de algodón</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="images/pride.jpg" alt="Remeras con diseños personalizados">
+        <div class="product-card-label">
+          <div class="tag">Personalizado</div>
+          <div>Diseños únicos</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="images/cool-kitchen.jpg" alt="Gorras trucker con logo">
+        <div class="product-card-label">
+          <div class="tag">Accesorios</div>
+          <div>Gorras trucker</div>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="images/deportivo.jpg" alt="Camisetas deportivas sublimadas">
+        <div class="product-card-label">
+          <div class="tag">Deportivo</div>
+          <div>Camisetas deportivas</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TÉCNICAS ── -->
+<section id="tecnicas">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="section-label">Cómo lo hacemos</p>
+      <h2 class="section-title">Técnicas de estampado</h2>
+    </div>
+    <div class="tecnicas-grid">
+      <div class="tecnica-card reveal">
+        <div class="tecnica-icon">🖨️</div>
+        <h3>Sublimación</h3>
+        <p>Ideal para telas de poliéster. El diseño se fusiona con las fibras para un resultado duradero, con colores vibrantes y sin textura al tacto. Perfecta para uniformes y camisetas deportivas.</p>
+      </div>
+      <div class="tecnica-card reveal">
+        <div class="tecnica-icon">🎨</div>
+        <h3>Vinilo termoadhesivo</h3>
+        <p>Láminas de vinilo cortadas con precisión y aplicadas con calor. Excelente para diseños con colores sólidos, textos y logos. Alta durabilidad en el tiempo y el lavado.</p>
+      </div>
+      <div class="tecnica-card reveal">
+        <div class="tecnica-icon">💧</div>
+        <h3>DTF (Film directo)</h3>
+        <p>Transfer digital de alta definición. Permite estampar diseños complejos, fotográficos y multicolor sobre cualquier tipo de tela: algodón, poliéster, mezclas y más.</p>
+      </div>
+      <div class="tecnica-card reveal">
+        <div class="tecnica-icon">⚡</div>
+        <h3>Serigrafía</h3>
+        <p>La técnica clásica reinventada. Ideal para grandes tiradas y diseños de gran impacto visual. Colores opacos y saturados que resaltan en cualquier prenda.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── UBICACIÓN ── -->
+<section id="ubicacion">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="section-label">Dónde encontrarnos</p>
+      <h2 class="section-title">Ubicación y horarios</h2>
+    </div>
+    <div class="ubicacion-grid">
+      <div class="reveal">
+        <div class="map-placeholder">
+          <div class="map-pin-icon">📍</div>
+          <div>
+            <div class="map-address">Concordia, Entre Ríos</div>
+            <p style="margin-top:.5rem; font-size:.85rem;">Argentina</p>
+          </div>
+          <a href="https://maps.google.com/?q=Concordia+Entre+Rios+Argentina" target="_blank" class="btn-primary" style="margin-top:1rem; display:inline-block;">
+            Ver en Google Maps
+          </a>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="horarios-card">
+          <h3>🕐 Horarios de atención</h3>
+          <div class="horario-row">
+            <span class="dia">Lunes – Viernes</span>
+            <span class="hora">9:00 – 13:00 <span class="hora-badge">y</span> 16:00 – 20:00</span>
+          </div>
+          <div class="horario-row">
+            <span class="dia">Sábado</span>
+            <span class="hora">9:00 – 13:00</span>
+          </div>
+          <div class="horario-row">
+            <span class="dia">Domingo</span>
+            <span class="hora cerrado">Cerrado</span>
+          </div>
+          <p style="margin-top:1.5rem; font-size:0.82rem; color:rgba(255,255,255,0.35); line-height:1.6;">
+            También podés consultar por WhatsApp fuera del horario de atención. ¡Respondemos a la brevedad!
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACTO ── -->
+<section id="contacto">
+  <div class="section-inner">
+    <div class="contacto-inner">
+      <div class="contacto-info reveal">
+        <h2>¿Tenés un proyecto en mente?</h2>
+        <p>Escribinos y empezamos a trabajar juntos. Presupuesto sin cargo y asesoramiento personalizado para cada pedido, grande o chico.</p>
+
+        <div class="contacto-cards">
+          <a href="https://wa.me/5493456XXXXXX" class="contact-card">
+            <div class="contact-card-icon">📱</div>
+            <div class="contact-card-text">
+              <div class="label">WhatsApp</div>
+              <div class="value">+54 9 345 6 XXX-XXX</div>
+            </div>
+          </a>
+          <a href="mailto:lastampa@email.com" class="contact-card">
+            <div class="contact-card-icon">✉️</div>
+            <div class="contact-card-text">
+              <div class="label">Email</div>
+              <div class="value">lastampa@email.com</div>
+            </div>
+          </a>
+          <a href="https://instagram.com/lastampa" target="_blank" class="contact-card">
+            <div class="contact-card-icon">📸</div>
+            <div class="contact-card-text">
+              <div class="label">Instagram</div>
+              <div class="value">@lastampa</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="owner-card">
+          <div class="owner-avatar">LS</div>
+          <div class="owner-name">Nombre del propietario</div>
+          <div class="owner-role">Fundador &amp; Propietario — La Stampa</div>
+          <p class="owner-quote">
+            "Cada estampa cuenta una historia. En La Stampa ponemos pasión en cada detalle para que tu idea quede perfecta en la tela."
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p>© 2024 <span>La Stampa</span> — Gráfica Textil · Concordia, Entre Ríos · Todos los derechos reservados.</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
