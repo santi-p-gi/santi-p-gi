@@ -303,6 +303,61 @@
     line-height: 1.7;
   }
 
+  /* ── TÉCNICA ÚNICA (sublimación) ── */
+  .tecnica-feature {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3.5rem;
+    align-items: center;
+    margin-top: 3rem;
+  }
+  .tecnica-feature-photo {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(122,194,30,0.25);
+    aspect-ratio: 4/3;
+  }
+  .tecnica-feature-photo img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform .5s;
+  }
+  .tecnica-feature-photo:hover img { transform: scale(1.05); }
+
+  .tecnica-feature-text .tecnica-icon {
+    margin-bottom: 1.5rem;
+  }
+  .tecnica-feature-text h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 1px;
+    color: var(--verde-neon);
+    margin-bottom: 1rem;
+  }
+  .tecnica-feature-text p {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+  .tecnica-feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+  }
+  .tecnica-feature-list li {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.75);
+  }
+  .tecnica-feature-list li::before {
+    content: "✓";
+    color: var(--verde-neon);
+    font-weight: 900;
+  }
+
   /* ── UBICACIÓN / HORARIOS ── */
   #ubicacion { background: var(--negro); }
 
@@ -493,7 +548,8 @@
     nav ul { display: none; }
     .products-intro,
     .ubicacion-grid,
-    .contacto-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .contacto-inner,
+    .tecnica-feature { grid-template-columns: 1fr; gap: 2rem; }
     .hero-mosaic { grid-template-columns: 1fr 1fr; }
     .mosaic-cell.tall { grid-row: auto; }
   }
@@ -619,33 +675,29 @@
   </div>
 </section>
 
-<!-- ── TÉCNICAS ── -->
+<!-- ── TÉCNICA ── -->
 <section id="tecnicas">
   <div class="section-inner">
     <div class="reveal">
       <p class="section-label">Cómo lo hacemos</p>
-      <h2 class="section-title">Técnicas de estampado</h2>
+      <h2 class="section-title">Nuestra técnica: Sublimación</h2>
     </div>
-    <div class="tecnicas-grid">
-      <div class="tecnica-card reveal">
+    <div class="tecnica-feature reveal">
+      <div class="tecnica-feature-photo">
+        <img src="images/deportivo.jpg" alt="Camiseta sublimada La Stampa">
+      </div>
+      <div class="tecnica-feature-text">
         <div class="tecnica-icon">🖨️</div>
-        <h3>Sublimación</h3>
-        <p>Ideal para telas de poliéster. El diseño se fusiona con las fibras para un resultado duradero, con colores vibrantes y sin textura al tacto. Perfecta para uniformes y camisetas deportivas.</p>
-      </div>
-      <div class="tecnica-card reveal">
-        <div class="tecnica-icon">🎨</div>
-        <h3>Vinilo termoadhesivo</h3>
-        <p>Láminas de vinilo cortadas con precisión y aplicadas con calor. Excelente para diseños con colores sólidos, textos y logos. Alta durabilidad en el tiempo y el lavado.</p>
-      </div>
-      <div class="tecnica-card reveal">
-        <div class="tecnica-icon">💧</div>
-        <h3>DTF (Film directo)</h3>
-        <p>Transfer digital de alta definición. Permite estampar diseños complejos, fotográficos y multicolor sobre cualquier tipo de tela: algodón, poliéster, mezclas y más.</p>
-      </div>
-      <div class="tecnica-card reveal">
-        <div class="tecnica-icon">⚡</div>
-        <h3>Serigrafía</h3>
-        <p>La técnica clásica reinventada. Ideal para grandes tiradas y diseños de gran impacto visual. Colores opacos y saturados que resaltan en cualquier prenda.</p>
+        <h3>Color y durabilidad en cada prenda</h3>
+        <p>
+          Trabajamos exclusivamente con sublimación, una técnica que fusiona la tinta directamente con las fibras de la tela mediante calor. El resultado es un estampado que no se agrieta, no se despega y mantiene los colores intactos lavado tras lavado.
+        </p>
+        <ul class="tecnica-feature-list">
+          <li>Colores vibrantes y de alta definición</li>
+          <li>Sin textura al tacto — la tinta es parte de la tela</li>
+          <li>Ideal para diseños complejos y fotográficos</li>
+          <li>Máxima durabilidad ante lavados y uso intenso</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -663,10 +715,10 @@
         <div class="map-placeholder">
           <div class="map-pin-icon">📍</div>
           <div>
-            <div class="map-address">Concordia, Entre Ríos</div>
-            <p style="margin-top:.5rem; font-size:.85rem;">Argentina</p>
+            <div class="map-address">3 de Febrero 560</div>
+            <p style="margin-top:.5rem; font-size:.85rem;">Concordia, Entre Ríos, Argentina</p>
           </div>
-          <a href="https://maps.google.com/?q=Concordia+Entre+Rios+Argentina" target="_blank" class="btn-primary" style="margin-top:1rem; display:inline-block;">
+          <a href="https://maps.app.goo.gl/W5NHtAHpKHTPY3hi7" target="_blank" class="btn-primary" style="margin-top:1rem; display:inline-block;">
             Ver en Google Maps
           </a>
         </div>
@@ -676,7 +728,7 @@
           <h3>🕐 Horarios de atención</h3>
           <div class="horario-row">
             <span class="dia">Lunes – Viernes</span>
-            <span class="hora">9:00 – 13:00 <span class="hora-badge">y</span> 16:00 – 20:00</span>
+            <span class="hora">7:00 – 20:00</span>
           </div>
           <div class="horario-row">
             <span class="dia">Sábado</span>
@@ -704,25 +756,25 @@
         <p>Escribinos y empezamos a trabajar juntos. Presupuesto sin cargo y asesoramiento personalizado para cada pedido, grande o chico.</p>
 
         <div class="contacto-cards">
-          <a href="https://wa.me/5493456XXXXXX" class="contact-card">
+          <a href="https://wa.me/5493454026120" class="contact-card">
             <div class="contact-card-icon">📱</div>
             <div class="contact-card-text">
               <div class="label">WhatsApp</div>
-              <div class="value">+54 9 345 6 XXX-XXX</div>
+              <div class="value">+54 9 3454 02-6120</div>
             </div>
           </a>
-          <a href="mailto:lastampa@email.com" class="contact-card">
+          <a href="mailto:percocacho@gmail.com" class="contact-card">
             <div class="contact-card-icon">✉️</div>
             <div class="contact-card-text">
               <div class="label">Email</div>
-              <div class="value">lastampa@email.com</div>
+              <div class="value">percocacho@gmail.com</div>
             </div>
           </a>
-          <a href="https://instagram.com/lastampa" target="_blank" class="contact-card">
+          <a href="https://instagram.com/lastampagraficatextil" target="_blank" class="contact-card">
             <div class="contact-card-icon">📸</div>
             <div class="contact-card-text">
               <div class="label">Instagram</div>
-              <div class="value">@lastampa</div>
+              <div class="value">@lastampagraficatextil</div>
             </div>
           </a>
         </div>
@@ -730,11 +782,11 @@
 
       <div class="reveal">
         <div class="owner-card">
-          <div class="owner-avatar">LS</div>
-          <div class="owner-name">Nombre del propietario</div>
+          <div class="owner-avatar">CP</div>
+          <div class="owner-name">Carlos Percodani</div>
           <div class="owner-role">Fundador &amp; Propietario — La Stampa</div>
           <p class="owner-quote">
-            "Cada estampa cuenta una historia. En La Stampa ponemos pasión en cada detalle para que tu idea quede perfecta en la tela."
+            "La seguridad de ver tus proyectos exactamente como los imaginaste."
           </p>
         </div>
       </div>
